@@ -1,8 +1,10 @@
 任务记录：
 ====
-#task1:<br>
+task1:<br>
+----
 1、DOM2级事件element.addEventListener('click',function(){},false),默认false冒泡事件，可以设置为true，在事件捕获时触发；<br>
 2、使用EventUtil对象可以跨浏览器<br>
 
-#task2:<br>
+task2:<br>
+----
 1、
