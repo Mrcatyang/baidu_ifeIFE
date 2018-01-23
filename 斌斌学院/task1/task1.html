@@ -28,13 +28,13 @@
       */
 
       /*DOM2级事件
-      let oInput = document.querySelector('#aqi-input');
-      let oBtn = document.querySelector('#button');
-      let oSpan = document.querySelector('#aqi-display');
+      let input = document.querySelector('#aqi-input');
+      let btn = document.querySelector('#button');
+      let span = document.querySelector('#aqi-display');
 
-      oBtn.addEventListener('click',function(){
-          if(oInput.value!=''){
-              oSpan.innerHTML = oInput.value;
+      btn.addEventListener('click',function(){
+          if(input.value!=''){
+              span.innerHTML = input.value;
           }else{
               alert('请输入内容')
           }
@@ -44,19 +44,19 @@
       /*    
       兼容写法，使用EventUtil对象
       */
-      let oInput = document.querySelector('#aqi-input');
-      let oBtn = document.querySelector('#button');
-      let oSpan = document.querySelector('#aqi-display');
+      let input = document.querySelector('#aqi-input');
+      let btn = document.querySelector('#button');
+      let span = document.querySelector('#aqi-display');
 
       let handler = function () {
-        if (oInput.value !== '') {
-          oSpan.innerHTML = oInput.value;
+        if (input.value !== '') {
+          span.innerHTML = input.value;
         } else {
           alert('请输入内容');
         }
       };
 
-      EventUtil.addHandler(oBtn, 'click', handler);
+      EventUtil.addHandler(btn, 'click', handler);
     })();
   </script>
 </body>
