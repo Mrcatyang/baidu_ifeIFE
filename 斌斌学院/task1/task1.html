@@ -49,7 +49,7 @@
       let span = document.querySelector('#aqi-display');
 
       let handler = function () {
-        if (input.value !== '') {
+        if (input.value) {
           span.innerHTML = input.value;
         } else {
           alert('请输入内容');

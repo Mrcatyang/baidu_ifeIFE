@@ -1,0 +1,10 @@
+main {
+    margin-top: 10px;
+}
+
+main span {
+    margin-right: 10px;
+    padding: 2px 8px;
+    color: white;
+    background: red;
+}

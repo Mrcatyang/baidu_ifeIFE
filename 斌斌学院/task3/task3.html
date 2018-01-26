@@ -45,16 +45,19 @@ function getData() {
     ……
   ]
   */
-  let source = document.querySelector('source');
-  let lis = source.querySelectorAll('li');
+  let lis = document.querySelectorAll('li');
   let data = [];
 
-  alert(Array.isArray(lis))
-
-  
+  for(let i = 0;i < lis.length;i++){
+    let item = [];
+    // item[0] = lis[i].textContent.slice(0,2);
+    // item[1] = lis[i].textContent.slice(-2,lis[i].textContent.length);
+    item[0] = lis[i].textContent.substr(0,2);
+    item[1] = lis[i].textContent.substr(-2,2);
+    data.push(item);
+  }
 
   return data;
-
 }
 
 /**
@@ -63,7 +66,8 @@ function getData() {
  * 返回一个排序后的数组
  */
 function sortAqiData(data) {
-
+  data.sort((x,y) => x[1] - y[1]);
+  return data;
 }
 
 /**
@@ -72,11 +76,17 @@ function sortAqiData(data) {
  * 格式见ul中的注释的部分
  */
 function render(data) {
-
+  let resort = document.querySelector('#resort');
+  
+  for(let i = 0;i < data.length;i++){
+    let li = document.createElement('li');
+    li.innerHTML = `第${i+1}名：${data[i][0]}空气质量：<b>${data[i][1]}</b>`;
+    resort.appendChild(li)
+  }
 }
 
 function btnHandle() {
-  var aqiData = getData();
+  let aqiData = getData();
   aqiData = sortAqiData(aqiData);
   render(aqiData);
 }
@@ -84,6 +94,9 @@ function btnHandle() {
 function init() {
 
   // 在这下面给sort-btn绑定一个点击事件，点击时触发btnHandle函数
+  let btn = document.querySelector('#sort-btn');
+
+  btn.addEventListener('click',btnHandle)
 
 }
 

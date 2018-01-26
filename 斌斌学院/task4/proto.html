@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    (function () {
+        function Person(name) {
+            this.name = name;
+        };
+        Person.prototype.sex = '男';
+        //apply，call继承
+        function Child(name, job) {
+            Person.apply(this, [name]);
+            this.job = job;
+        };
+
+
+        //原型链无法隔离
+        function Child1(name, job) {
+            Person.apply(this, [name]);
+            this.job = job;
+        };
+        Child1.prototype = Person.prototype;
+
+
+        //组合继承
+        function Child2(name, job) {
+            Person.apply(this, [name]);
+            this.job = job;
+        };
+        Child2.prototype = Object.create(Person.prototype);
+        Child2.prototype.constructor = Child2;
+
+        //console.log(ming instanceof Person);
+        //console.log(Person.prototype);
+
+        //拷贝继承
+        function Child3(name, job) {
+            Person.apply(this, [name]);
+            this.job = job;
+        };
+
+        function copy(x, y) {
+            let c = x.prototype;
+            let p = y.prototype;
+            for (i in p) {
+                c[i] = p[i]
+            }
+        };
+
+        copy(Child3, Person)
+        let ming = new Child3('min', 'doctor');
+        console.log(Child3.prototype)
+        console.log(Person.prototype)
+
+        //浅拷贝
+        let Chinese = {
+            nation: '中国',
+            arr: [1, 2, 3]
+        };
+        let Doctor = {
+            career: '医生',
+        };
+
+        // function copy(c,p){
+        //     for (i in p){
+        //         c[i] = p[i];
+        //     }
+        // };
+        //深拷贝
+        function deepcopy(c, p) {
+            var c = c || {};
+            for (let i in p) {
+                if (typeof p[i] === 'object') {
+                    c[i] = (p[i].constructor === Array) ? [] : {};
+                    deepcopy(c[i], p[i]);
+                } else {
+                    c[i] = p[i];
+                }
+            }
+        };
+        deepcopy(Doctor, Chinese)
+        Doctor.arr.push(4)
+        console.log(Chinese)
+        console.log(Doctor)
+
+    })()
+</script>
+
+</html>

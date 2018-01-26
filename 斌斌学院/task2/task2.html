@@ -35,11 +35,11 @@
             let ul = document.querySelector('#aqi-list');
             let sortData = aqiData.filter(item => item[1] > 60).sort((x, y) => y[1] - x[1]);
 
-            sortData.forEach((item, index) => {
-                    var li = document.createElement('li');
+            sortData.map((item, index) => {
+                    let li = document.createElement('li');
                     //li.innerHTML = '第' + (index + 1) + '名：' + item[0] + ',' + item[1];
-                    li.textContent = '第' + (index + 1) + '名：' + item[0] + ',' + item[1];
-                 ul.appendChild(li);
+                    li.textContent = `第${index + 1}名:${item[0]},${item[1]}`;
+                    ul.appendChild(li);
                 }
                 // ul.innerHTML += "<li>" + '第' + (index + 1) + '名：' + item[0] + ',' + item[1] + "</li>"
             );
