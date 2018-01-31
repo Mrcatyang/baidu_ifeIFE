@@ -1,0 +1,19 @@
+section{
+    padding: 10px;
+    border: 1px solid;
+    background: white;
+}
+
+.deep{
+    width: 390px;
+    flex-wrap: wrap;
+}
+
+.deep,.deep1,.deep2,.deep3,.deep4{
+    display: flex;
+    margin:2px;
+}
+
+.deep1{
+    margin: 20px 0;
+}

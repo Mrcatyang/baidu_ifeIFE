@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    (function () {
+        //冒泡排序
+        function bubbleSort(data) {
+            for (let i = 0; i < data.length - 1; i++) {
+                for (let j = 0; j < data.length - 1 - i; j++) {
+                    if (data[j] > data[j + 1]) {
+                        let temp = data[j];
+                        data[j] = data[j + 1];
+                        data[j + 1] = temp;
+                    }
+                }
+            }
+            return data;
+        };
+        //快速排序
+        function quickSort(data) {
+            if (data.length < 2) {
+                return data;
+            }
+            let left = [];
+            let right = [];
+            let mid = data.splice(Math.floor(data.length / 2), 1)[0];
+            for (let i = 0; i < data.length; i++) {
+                if (data[i] < mid) {
+                    left.push(data[i]);
+                } else {
+                    right.push(data[i]);
+                }
+            }
+            return quickSort(left).concat([mid], quickSort(right));
+        };
+        //选择排序
+        function selectSort(data) {
+            for (let i = 0; i < data.length - 1; i++) {
+                let min = i;
+                for (let j = i + 1; j < data.length; j++) {
+                    if (data[j] < data[min]) {
+                        min = j;
+                    }
+                }
+                let temp = data[i];
+                data[i] = data[min];
+                data[min] = temp;
+            }
+            return data;
+        };
+        //插入排序
+        function insertSort(data) {
+            for (let i = 1; i < data.length; i++) {
+                for (let j = i - 1; j >= 0; j--) {
+                    if (data[j] > data[j + 1]) {
+                        let temp = data[j];
+                        data[j] = data[j + 1];
+                        data[j + 1] = temp;
+                    }
+                }
+            }
+            return data;
+        };
+
+        let data1 = [7, 3, 2, 6, 8, 4, 1, 9, 5, 0];
+        let data2 = [7, 3, 2, 6, 8, 4, 1, 9, 5, 0];
+        let data3 = [7, 3, 2, 6, 8, 4, 1, 9, 5, 0];
+        let data4 = [7, 3, 2, 6, 8, 4, 1, 9, 5, 0];
+        let bubble = bubbleSort(data1);
+        console.log(bubble);
+        let quick = quickSort(data2);
+        console.log(quick);
+        let select = selectSort(data3);
+        console.log(select);
+        let insert = insertSort(data4);
+        console.log(insert);
+    })()
+</script>
+
+</html>

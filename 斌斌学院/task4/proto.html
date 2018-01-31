@@ -13,86 +13,106 @@
 </body>
 <script>
     (function () {
-        function Person(name) {
+        //构造函数继承
+        function Person() {
+            this.nation = 'Chinese';
+        };
+        Person.prototype.skin = 'yellow';
+
+        function Child(name) {
             this.name = name;
         };
-        Person.prototype.sex = '男';
-        //apply，call继承
-        function Child(name, job) {
-            Person.apply(this, [name]);
-            this.job = job;
+
+        //apply、call方法，不能继承prototype;
+        function Child1(name) {
+            Person.apply(this);
+            this.name = name;
         };
+        let ming = new Child1('ming');
+        console.log(ming.nation);
+        console.log(ming.skin);
 
-
-        //原型链无法隔离
-        function Child1(name, job) {
-            Person.apply(this, [name]);
-            this.job = job;
+        //实例继承，新建实例，占用内存
+        function Child2(name) {
+            this.name = name;
         };
-        Child1.prototype = Person.prototype;
-
-
-        //组合继承
-        function Child2(name, job) {
-            Person.apply(this, [name]);
-            this.job = job;
-        };
-        Child2.prototype = Object.create(Person.prototype);
+        Child2.prototype = new Person();
         Child2.prototype.constructor = Child2;
+        let ming2 = new Child2('ming2');
+        console.log(ming2.nation);
+        console.log(ming2.skin);
+        console.log(ming2.__proto__);
+        console.log(Person.prototype);
 
-        //console.log(ming instanceof Person);
-        //console.log(Person.prototype);
+        //prototype和apply组合继承，两个prototype指向同一对象，设置constructor属性会导致继承链紊乱
+        function Child3(name) {
+            Person.apply(this);
+            this.name = name;
+        };
+        Child3.prototype = Person.prototype;
+        //Child3.prototype.constructor = Child3;
+        let ming3 = new Child3('ming3');
+        console.log(ming3.nation);
+        console.log(ming3.skin);
+        console.log(ming3.__proto__);
+        console.log(Person.prototype);
 
-        //拷贝继承
-        function Child3(name, job) {
-            Person.apply(this, [name]);
-            this.job = job;
+        //prototype和apply组合继承优化,通过Object.create创建空对象，其__proto__指向Person；
+        function Child4(name) {
+            Person.apply(this);
+            this.name = name;
+        };
+        Child4.prototype = Object.create(Person.prototype);
+        Child4.prototype.constructor = Child4;
+        let ming4 = new Child4('ming4');
+        console.log(ming4.nation);
+        console.log(ming4.skin);
+        console.log(ming4.__proto__);
+        console.log(Person.prototype);
+
+        //普通对象继承
+        //浅拷贝，拷贝属性值为对象或数组的会直接复制内存地址，不能隔离
+        let Animal = {
+            name: '动物'
         };
 
-        function copy(x, y) {
-            let c = x.prototype;
-            let p = y.prototype;
-            for (i in p) {
-                c[i] = p[i]
+        let Cat = {
+            type: '英短'
+        };
+
+        function copy(parent, child) {
+            for (let i in parent) {
+                child[i] = parent[i];
             }
-        };
+        }
+        copy(Animal, Cat);
+        console.log(Cat);
 
-        copy(Child3, Person)
-        let ming = new Child3('min', 'doctor');
-        console.log(Child3.prototype)
-        console.log(Person.prototype)
-
-        //浅拷贝
-        let Chinese = {
-            nation: '中国',
-            arr: [1, 2, 3]
-        };
-        let Doctor = {
-            career: '医生',
-        };
-
-        // function copy(c,p){
-        //     for (i in p){
-        //         c[i] = p[i];
-        //     }
-        // };
-        //深拷贝
-        function deepcopy(c, p) {
-            var c = c || {};
-            for (let i in p) {
-                if (typeof p[i] === 'object') {
-                    c[i] = (p[i].constructor === Array) ? [] : {};
-                    deepcopy(c[i], p[i]);
-                } else {
-                    c[i] = p[i];
+        function deepCopy(parent, child) {
+            for (let i in parent) {
+                if (typeof parent[i] === 'object') {
+                    child[i] = (parent[i].constructor === Array) ? [] : {};
+                    deepCopy(parent[i],child[i])
+                }  else {
+                    child[i] = parent[i];
                 }
             }
         };
-        deepcopy(Doctor, Chinese)
-        Doctor.arr.push(4)
-        console.log(Chinese)
-        console.log(Doctor)
+        let Animal1 = {
+            name: '动物',
+            habitat:['中国','越南','泰国'],
+            type:{
+                one:'英短',
+                two:'波斯猫'
+            }
+        };
 
+        let Cat1 = {
+            nick: '大毛'
+        };
+
+        deepCopy(Animal1,Cat1);
+        console.log(Cat1)
     })()
 </script>
 
